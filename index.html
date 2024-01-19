@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
+  <title>Le Grand Oral</title>
+</head>
+<body>
+  <h1>Mon grand Oral</h1>
+  <h2>Problématique :</h2>
+  <h2>"L'algorithme racine carrée inverse rapide : doit-on privilégier les performances en dépit d'un mauvais code ?"</h2>
+  <pre>
+    <code>
+      float q_rsqrt(float number){
+        long i;
+        float x2, y;
+        const float threehalfs = 1.5F;
+        
+        x2 = number * 0.5F;
+        y  = number;
+        i  = * ( long * ) &y;                       // evil floating point bit level hacking
+        i  = 0x5f3759df - ( i >> 1 );               // what the f*ck?
+        y  = * ( float * ) &i;
+        y  = y * ( threehalfs - ( x2 * y * y ) );   // 1st iteration
+        // y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
+        
+        return y;
+      }
+    </code>
+  </pre>
+  <p>Tester le code</p>
+  <p style="display:inline">Entrez une valeur :</p>
+  <input type="text" placeholder="10.5" step=0.000001 id="q-sqrt-input">
+  <button id="exec-q-sqrt">Exécuter</button>
+  <div class="code-result-div" id="q-sqrt-result-div">
+    <p class="code-result" id="q-sqrt-result">Résultat</p>
+  </div>
+
+  <div id="demo-grid">
+    <div id="demo">
+    </div>
+    <div id="animation-steps">
+    </div>
+  </div>
+  <button id="normalize-button">Normaliser le vecteur</button>
+
+  <hr>
+  <h3>Bibliographie</h3>
+  <a href="https://fr.wikipedia.org/wiki/Racine_carr%C3%A9e_inverse_rapide">Racine carrée inversée - Wikipedia</a>
+  <a href="https://www.youtube.com/watch?v=p8u_k2LIZyo">"Fast Inverse Square Root — A Quake III Algorithm" - Nemean (YouTube)</a>
+  <a href="https://www.youtube.com/watch?v=tmb6bLbxd08">"The Truth about the Fast Inverse Square Root on the N64" - Kaze Emmanuar (YouTube)</a>
+  <a href="https://www.youtube.com/watch?v=4LiP39gJuqE">"Optimizing with "Bad Code"" - Kaze Emmanuar (YouTube)</a>
+
+
+
+  <script src="load.js"></script>
+  <script type="module" src="main.js"></script>
+  <script type="module" src="animation.js"></script>
+</body>
+</html>

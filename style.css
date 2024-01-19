@@ -1,0 +1,21 @@
+.code-result-div {
+  width: 25vw;
+  height: 5vh;
+  background: #151515;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.code-result {
+  color: #ffffff
+}
+
+a {
+  display: block;
+}
+
+#demo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
