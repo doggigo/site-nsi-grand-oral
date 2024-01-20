@@ -14,6 +14,43 @@
   <h1>Mon grand Oral</h1>
   <h2>Problématique :</h2>
   <h2>"L'algorithme racine carrée inverse rapide : doit-on privilégier les performances en dépit d'un mauvais code ?"</h2>
+  <ul>
+    <h3>Sommaire</h3>
+    <li> <a href="#presentation">Présentation de l'algorithme</a></li>
+    <li> <a href="#utilite">À quoi sert cet algorithme ?</a></li>
+    <li><a href="#bibliographie">Bibliographie</a></li>
+  </ul>
+  <h3 id="presentation">Présentation</h3>
+  <p>L'algorithme "fast inverse square root" est un algorithme créé par Greg Walsh, un développeur de la compagnie Ardent. 
+    <br>
+    Il se Repose sur les travaux de William Kahan ayant publié 10 ans avant montrant comment calculer une racine carrée en manipulant des bits et en utilisant la méthode de Newton.
+    <br>
+    L'algorithme a été repris par ses collègues dont un appelé Brian Hook qui l'a alors conservé et réutilisé dans son poste de développeur de jeux pour la compagnie Id Software, créateurs des jeux Doom et Quake.
+    <br>
+    Cet algorithme est alors devenu une icône dans le monde de l'optimisation lors de la publication Open Source du code du jeu Quake III, dans lequel il était utilisé.
+</p>
+  <h3>À quoi sert la racine carrée inverse ?</h3>
+  <p>
+  La racine carrée inverse est une fonction composée utilisée en géométrie, aussi bien dans l'espace que dans le plan.
+    <br>
+  Partons d'un vecteur \(\vec{v} = \pmatrix{x \\ y}\).
+    <br>
+  Nous voulons que la somme de ses coordonnées soit égale à 1.
+    <br>
+  Ce processus s'appelle la normalisation.
+    <br>
+  Pour obtenir \(\vec{w}\) ; représentant le résultat de la normalisation de \(\vec{v}\), nous devons diviser chaque valeur de \(\vec{v}\) par 
+    <br>
+  Soit \(\alpha\) la norme euclidienne de \(\vec{v}\) :
+  $$\alpha = \sqrt{x_{\vec{v}}^2 + y_{\vec{v}}^2}
+  <br>
+  
+  $$
+
+  
+  </p>
+  </p>
+  
   <pre>
     <code>
       float q_rsqrt(float number){
@@ -50,7 +87,8 @@
   <button id="normalize-button">Normaliser le vecteur</button>
 
   <hr>
-  <h3>Bibliographie</h3>
+  <h3 id="bibliographie">Bibliographie</h3>
+  <a href="https://www.beyond3d.com/content/articles/15/">Origin of Quake3's Fast InvSqrt()</a>
   <a href="https://fr.wikipedia.org/wiki/Racine_carr%C3%A9e_inverse_rapide">Racine carrée inversée - Wikipedia</a>
   <a href="https://www.youtube.com/watch?v=p8u_k2LIZyo">"Fast Inverse Square Root — A Quake III Algorithm" - Nemean (YouTube)</a>
   <a href="https://www.youtube.com/watch?v=tmb6bLbxd08">"The Truth about the Fast Inverse Square Root on the N64" - Kaze Emmanuar (YouTube)</a>

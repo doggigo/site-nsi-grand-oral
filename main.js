@@ -24,7 +24,7 @@ function addStep(num, elem, content) {
 }
 
 export function LaTeXVector(x,y) {
-  return `\\begin{pmatrix} ${x} \\\\ ${y} \\end{pmatrix}`
+  return `\\pmatrix{${x} \\\\ ${y}}`
 }
 
 function createSteps() {
