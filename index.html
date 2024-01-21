@@ -16,6 +16,8 @@
   <h2>"L'algorithme racine carrée inverse rapide : doit-on privilégier les performances en dépit d'un mauvais code ?"</h2>
   <ul>
     <h3>Sommaire</h3>
+    <!--INFOS :
+      temps d'exécution : 3.54ns-->
     <li> <a href="#presentation">Présentation de l'algorithme</a></li>
     <li> <a href="#utilite">À quoi sert cet algorithme ?</a></li>
     <li><a href="#bibliographie">Bibliographie</a></li>
@@ -42,13 +44,17 @@
   Pour obtenir \(\vec{w}\) ; représentant le résultat de la normalisation de \(\vec{v}\), nous devons diviser chaque valeur de \(\vec{v}\) par 
     <br>
   Soit \(\alpha\) la norme euclidienne de \(\vec{v}\) :
-  $$\alpha = \sqrt{x_{\vec{v}}^2 + y_{\vec{v}}^2}
-  <br>
-  
-  $$
+  $$\alpha = \sqrt{x_{\vec{v}}^2 + y_{\vec{v}}^2}$$
+    <br>
+    Ainsi, on peut calculer \(\vec{w}\) :
+    $$\vec{w} = \pmatrix{\frac{x_\vec{v}}{\alpha}\\\frac{y_\vec{v}}{\alpha}}$$
+    <br>
+    Maintenant, notre vecteur est normalisé.
+    <br>
+    Voici une démonstration de La normalisation d'un vecteur (ici en 2 dimensions).
+    Vous verrez aussi par la même occasion que l'algorithme présenté est fiable et n'a une marche d'erreur .
 
   
-  </p>
   </p>
   
   <pre>
