@@ -9,5 +9,15 @@
   J'ai également utilisé le module MathJax qui m'a permis d'utiliser le langage LaTeX sur html.
   Pour finir, j'ai créé ma bibliographie en y ajoutant les vidéos qui m'ont permis de trouver ce sujet.
 
+20/01/2024 : j'ai fait des recherches sur l'origine de l'algorithme et écrit le résultat de mes recherches
 
-23/01/2024 - Valgrind + QCacheGrind (KCacheGrind Pré-compilé pour windows)
+21/01/2024 : J'ai décrit à quoi servait l'algorithme (je risque de le modifier par la suite)
+
+23/01/2024 : En vue d'expliquer pourquoi utiliser cet algorithme, j'ai voulu montrer le nombre d'opérations faites entre l'approche directe "reverse_sqrt" qui renvoie simplement 1/sqrt(x) et q_rsqrt(x)
+  J'ai d'abord pensé à compiler mon fichier .c pour obtenir le code compilé en assembleur et compter le nombre d'opérations (il se situe toujours à l'adresse c/fast_rsqrt.s)
+  Mais problème : la fonction inverse_sqrt utilise la librairie "math.h", une librairie statique et donc déjà compilée. Je ne peux alors pas voir le nombre d'opérations totales faites par ma fonction.
+  Vient alors le logiciel Valgrind et sa fonctionnalité callgrind, elle permet de récupérer les statistiques d'un code en c.
+  Il va alors créer un fichier "callgrind.out.[xx]" avec xx un nombre à 2 chiffres.
+  J'ai alors voulu ouvrir ce fichier avec KCacheGrind, un logiciel pour visualiser plus facilement les données de ce fichier.
+  Encore un problème : KCacheGrind n'est plus téléchargeable sur Windows. J'ai alors téléchargé une version précompilée pour Windows du logiciel "QCacheGrind" et j'ai enfin pu voir le nombre d'appels
+  par fonction (et le résultat est sans appel, q_rsqrt fait ~ 17 fois moins d'appel que reverse_sqrt)
