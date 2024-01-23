@@ -92,10 +92,32 @@
   </div>
   <button id="normalize-button">Normaliser le vecteur</button>
 
+  <h3>Pourquoi utilise-t-on cet algorithme ?</h3>
+  <p>Il est vrai que le code est très dur à comprendre.
+    <br>
+    Alors pourquoi n'utilise-t-on pas un algorithme plus simple, tel que celui-ci ?
+    <pre>
+      <code>
+        #include &#60;math.h&#62;
+        float inverse_sqrt(float number) {
+          return 1 / sqrt(number);
+        }
+      </code>
+    </pre>
+    La réponse est qu'il est <strong>LENT</strong> car les opérations racine carrée et division sont toutes les deux compliquées à calculer.
+    <br>
+    Contrairement à la multiplication et aux opérations "bitwise" (au niveau de la représentation binaire) qui, elles, sont très rapides.
+    <br>
+    En moyenne, q_rsqrt est 3 à 4 fois plus rapide que inverse_sqrt en présentant une précision de plus de 99% avec une seule itération de la méthode de Newton;
+    <!--gcc -Wall -save-temps fast_rsqrt.c -o fast_rsqrt -lm-->
+
+  </p>
+
   <hr>
   <h3 id="bibliographie">Bibliographie</h3>
   <a href="https://www.beyond3d.com/content/articles/15/">Origin of Quake3's Fast InvSqrt()</a>
   <a href="https://fr.wikipedia.org/wiki/Racine_carr%C3%A9e_inverse_rapide">Racine carrée inversée - Wikipedia</a>
+  <a href="https://www.geeksforgeeks.org/compiling-a-c-program-behind-the-scenes/">Compiling a C Program: Behind the Scenes (Geeks for Geeks)</a>
   <a href="https://www.youtube.com/watch?v=p8u_k2LIZyo">"Fast Inverse Square Root — A Quake III Algorithm" - Nemean (YouTube)</a>
   <a href="https://www.youtube.com/watch?v=tmb6bLbxd08">"The Truth about the Fast Inverse Square Root on the N64" - Kaze Emmanuar (YouTube)</a>
   <a href="https://www.youtube.com/watch?v=4LiP39gJuqE">"Optimizing with "Bad Code"" - Kaze Emmanuar (YouTube)</a>

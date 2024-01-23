@@ -1,0 +1,13 @@
+18/01/2024 : J'ai commencé par chercher comment compiler un programme en C pour qu'il puisse être lu par
+  un navigateur avec le langage WebAssembly. Après avoir essayé plusieurs compilateur qui étaient obsolètes ou même inaccessible
+  J'ai trouvé le compilateur parfait : Emscripten.
+  Son module "emcc" fonctionne exactement comme le compilateur gcc, à la différence que emcc compile en WASM et crée en plus un fichier javascript (que j'ai utilisé plus tard) ainsi qu'un fichier html qui exécute la fonction main,
+  qui m'a permis de vérifier que le code fonctionnait bien.
+
+19/01/2024 : J'ai utilisé la librairie p5.js afin de créer un modèle interactif qui consiste à tracer un vecteur à la souris
+  puis à montrer que la normalisation fonctionne correctement en détaillant les étapes.
+  J'ai également utilisé le module MathJax qui m'a permis d'utiliser le langage LaTeX sur html.
+  Pour finir, j'ai créé ma bibliographie en y ajoutant les vidéos qui m'ont permis de trouver ce sujet.
+
+
+23/01/2024 - Valgrind + QCacheGrind (KCacheGrind Pré-compilé pour windows)
