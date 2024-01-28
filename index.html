@@ -92,10 +92,12 @@
   </div>
   <button id="normalize-button">Normaliser le vecteur</button>
 
-  <h3>Pourquoi utilise-t-on cet algorithme ?</h3>
+  <h3>Pourquoi utilisait-on cet algorithme ?</h3>
+  <i>En effet, "utilisait", car depuis les nouveaux processeurs et architectures, il n'y a plus besoin de notre algorithme 
+  (à moins de faire des recherches sur les anciens ordinateurs ou de travailler sur des consoles rétro). L'algorithme ci-dessous fonctionnera même mieux avec les architecture modernes que notre algorithme q_rsqrt, il reste néanmoins une belle preuve d'ingénierie et ouvre un sujet intéressant sur l'optimisation</i>
   <p>Il est vrai que le code est très dur à comprendre.
     <br>
-    Alors pourquoi n'utilise-t-on pas un algorithme plus simple, tel que celui-ci ?
+    Alors pourquoi n'utilisait-on pas un algorithme plus simple, tel que celui-ci ?
     <pre>
       <code>
         #include &#60;math.h&#62;
@@ -104,23 +106,121 @@
         }
       </code>
     </pre>
-    La réponse est qu'il est <strong>LENT</strong> car les opérations racine carrée et division sont toutes les deux compliquées à calculer.
+    La réponse est qu'il était <strong>LENT</strong> car les opérations racine carrée et division étaient toutes les deux compliquées à calculer pour un ordinateur de l'époque.
     <br>
     Contrairement à la multiplication et aux opérations "bitwise" (au niveau de la représentation binaire) qui, elles, sont très rapides.
     <br>
-    En moyenne, q_rsqrt est 3 à 4 fois plus rapide que inverse_sqrt en présentant une précision de plus de 99% avec une seule itération de la méthode de Newton;
-    <!--gcc -Wall -save-temps fast_rsqrt.c -o fast_rsqrt -lm-->
-
+    En moyenne, q_rsqrt était à peu près 4 fois plus rapide que inverse_sqrt en présentant une précision de plus de 99% avec une seule itération de la méthode de Newton.
+    <br>
   </p>
+  <h3>Comment fonctionne l'algorithme ?</h3>
+  <h4>Le standard IEEE 754</h4>
+  <p>
+    Le standard IEEE 754 est le tout premier standard pour représenter des nombres flottants.
+    <br>
+    Voici son agencement :
+    <br>
+  </p>
+  <img src="images/IEEE_754_Single_Floating_Point_Format.png" alt="1er bit : le signe ; 2-9emes bits : l'exposant ; 9-32emes bits : la mantisse">
+  <i>Source : IEEE 754-1985 - Wikipedia</i>
 
+  <p>C'est de cette manière que les nombres flottants sont représentés en C, s'inspirant de la notation scientifique:
+    <br>
+    \(a = M\times B^n\) avec "a" le nombre, "B" la base, "M" la mantisse (comprise entre 1 et B exclu) et "n" l'exposant
+    <br>
+    On peut donc distinguer 3 parties :
+    <br>
+    Le signe représenté par le dernier bit
+    <br>
+    L'exposant représenté par les 11 bits suivants
+    <br>
+    La mantisse, représenté par les 23 premiers bits.
+    <br>
+    <br>
+    Ignorons le bit du signe puisque la norme au carré d'un vecteur ne peut jamais être nulle.
+    Les bits représentant L'exposant (en base 2) doivent eux aussi être signés, dans ce cas, on utilisera une portée de -128 à 128 au lieu de 0 à 256
+    Quant aux bits représentant la mantisse, nous voulons une valeur entre 1 et 2, soit entre 1 et 2 exclu
+    Les créateurs de ce standard ont alors remarqué que peu importe le nombre que l'on veut, la mantisse aura toujours pour partie entière le nombre 1,
+    Nous n'avons donc pas besoin de le stocker le 1 puisqu'il est toujours présent. Cela nous laisse alors 23 bits soit 2^23 nombres de précision.
+    Ainsi, nous représentons un nombre flottant de la même manière que l'écriture scientifique.
+    <br>
+  </p>
+  <h4>Manipuler un nombre binaire</h4>
+  <p>
+    Puisque maintenant nous possédons la mantisse M et l'exposant E, on peut retrouver l'écriture totale de notre chiffre :
+    <br>
+    Notre nombre E doit être au début de notre représentation binaire, on le multiplie donc par 2^23 afin qu'il soit après la mantisse.
+    <br>
+    Ce qui nous donne : \(a = 2^{23} \times E + M\)
+    <br>
+    Alors, pour récupérer notre nombre (en base binaire) à partir de la norme IEEE754, on a alors à effectuer cette formule :
+    <br>
+    $$(1 + \frac{M}{2^{23}})\times 2^{E-127}$$
+    <br>
+    On va essayer de le simplifier en prenant le logarithme de notre formule :
+    $$\log_2{(1 + \frac{M}{2^{23}})\times 2^{E-127}} = \log_2{(1 + \frac{M}{2^{23}})} + E-127$$
+    On va être bloqués à cette étape. Mais puisque le but de notre algorithme est d'avoir une approximation, on va pouvoir simplifier.
+    <br>
+    Car lorsque x est un petit nombre, on remarque que : \(\log_2(1 + x) \approx x\)
+    <br>
+    On peut admettre \(\mu\) un nombre choisi de manière arbitraire permettant de se rapprocher du résultat.
+    <br>
+    Ici, le créateur de l'algorithme a décidé que \(\mu = 0.0430\) car il a conclu que ce nombre donnait, en moyenne, les résultats les plus proches pour les nombres entre 0 et 1. Donc :
+    $$\log_2(1 + x) \approx x + \mu$$
+    <br>
+    On va donc écrire la formule au complet avec notre approximation :
+    $$\frac{M}{2^{23}} + \mu + E - 127 = \frac{1}{2^{23}}\times(\textcolor{red}{2^{23}\times E + M}) + \mu + 127$$
+    On retrouve notre formule pour obtenir notre représentation binaire \(\textcolor{red}{2^{23}\times E + M}\)
+    <br>
+    Ainsi, en appliquant le logarithme binaire sur notre représentation binaire, on obtient notre formule de base, simplement décalée et additionnée à \(127 + \mu\)
+    On peut donc dire que si n un nombre flottant, \(n \approx log_2(n)\)
+  </p>
+  <h4>"evil floating point bit level hacking"</h4>
+  <p>
+    Il faut savoir que "bit shift" un nombre vers la gauche le double, et bit shift un nombre vers la droite le divise par 2 (et l'arrondit à l'inférieur).
+  </p>
+  <h4>"What the f*ck"</h4>
+  <p>
+    on veut obtenir la racine carrée inverse, soit \(\frac{1}{\sqrt{x}}\)
+    <br>
+    on sait que \(x^{-1} = \frac{1}{x}\) et que \(x^\frac{1}{2} = \sqrt x\)
+    <br>
+    Ainsi, en combinant les 2, on obtient : \(x^{-\frac{1}{2}} = \frac{1}{\sqrt{x}}\)
+    <br>
+    Puisque nous avons démontré que \(x \approx log_2{x}\), on va donc pouvoir avoir :
+    $$x \approx \log_2{x} \Rightarrow x^{-\frac{1}{2}} \approx \log_2(x^{-\frac{1}{2}})$$
+    $$\log_2(x^{-\frac{1}{2}}) = -\frac{1}{2}\times\log_2{x}$$
+    Vous allez alors peut-être vous dire qu'il y a une division dans cet algorithme, mais nous avons précédemment parlé de cette technique s'appliquant aux longs, permettant de diviser un nombre par 2 sans avoir à faire de division
+    Donc : \(-\frac{1}{2}\log_2(x) = \)<code> - (i >> 1)</code>
+    Mais pourquoi a-t-on cette constante "0x5f3759df" semblant insignifiante ?
+    <br>
+    Admettons que \(\Gamma = x^{-\frac{1}{2}}\), alors \(\log_2(\Gamma) =-\frac{1}{2}\times\log_2(x)\)
+    posons \(B_n\) la représentation binaire de \(n\).
+    En remplaçant cette égalité par la représentation binaire de \(x\) et \(\Gamma\), on obtient :
+    $$\frac{1}{2^{23}}I_\Gamma + \mu - 127 = -\frac{1}{2}\Big(\frac{1}{2^{23}}I_x + \mu - 127\Big)$$
+    $$\frac{I_\Gamma}{2^{23}} = -\frac{1}{2}\Big(\frac{I_x}{2^{23}} - (127 - \mu)\Big) + (127-\mu)$$
+    $$I_\Gamma = 2^{23}(-\frac{1}{2}(\frac{I_x}{L} - (127 - \mu)) + (127 - \mu)) $$
+    $$I_\Gamma = -\frac{1}{2}2^{23}(\frac{I_x}{2^{23}} - (127 - \mu)) + 2^{23}(127-\mu)$$
+    $$I_\Gamma = -\frac{1}{2}I_x + \frac{1}{2}2^{23}(127-\mu) + 2^{23}(127 - \mu)$$
+    $$I_\Gamma = \frac{3}{2}2^{23}(127-\mu) - \frac{1}{2}I_x$$
+    Donc, pour trouver la valeur binaire de \(\Gamma\), on va devoir soustraire \(\frac{1}{2}I_x\) à \(\frac{3}{2}2^{23}(127-\mu)\).
+    <br>
+    On a déjà montré que \(\frac{1}{2}I_x\) pouvait se calculer avec la ligne <code> - (i >> 1)</code>
+    Ainsi, Nous n'avons plus qu'à calculer \(\frac{3}{2}2^{23}(127-\mu)\).
+    $$\Big(\frac{3}{2}2^{23}(127-\mu)\Big)_{10} = (\text{0x5f3759df})_{16}$$
+    Donc, on se retrouve avec ce code :
+    <code>0x5f3759df - (i >> 1)</code>
+  </p>
   <hr>
   <h3 id="bibliographie">Bibliographie</h3>
-  <a href="https://www.beyond3d.com/content/articles/15/">Origin of Quake3's Fast InvSqrt()</a>
+  <a href="https://www.beyond3d.com/content/articles/15/">"Origin of Quake3's Fast InvSqrt()" - Beyond3D</a>
+  <a href="https://en.wikipedia.org/wiki/IEEE_754-1985">IEEE 754-1985 - Wikipedia</a>
   <a href="https://fr.wikipedia.org/wiki/Racine_carr%C3%A9e_inverse_rapide">Racine carrée inversée - Wikipedia</a>
   <a href="https://www.geeksforgeeks.org/compiling-a-c-program-behind-the-scenes/">Compiling a C Program: Behind the Scenes (Geeks for Geeks)</a>
   <a href="https://www.youtube.com/watch?v=p8u_k2LIZyo">"Fast Inverse Square Root — A Quake III Algorithm" - Nemean (YouTube)</a>
   <a href="https://www.youtube.com/watch?v=tmb6bLbxd08">"The Truth about the Fast Inverse Square Root on the N64" - Kaze Emmanuar (YouTube)</a>
   <a href="https://www.youtube.com/watch?v=4LiP39gJuqE">"Optimizing with "Bad Code"" - Kaze Emmanuar (YouTube)</a>
+  <a href="https://www.linkedin.com/pulse/fast-inverse-square-root-still-armin-kassemi-langroodi">"Is Fast Inverse Square Root still Fast?" - Armin Kassemi Langroodi (LinkedIn)</a>
 
 
 

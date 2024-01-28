@@ -40,8 +40,12 @@ float inverse_sqrt(float number) {
 
 int main(int argc, char const *argv[])
 {
-  float a = q_rsqrt(45.0f);
-  float b = q_rsqrt_2(45.0f);
-  float c = inverse_sqrt(45.0f);
+  int size = 4;
+  float inputs[] = {0.4332111f,343432.0f,35.432211123f,33.2f};
+  for (int i = 0 ; i < size ; i++) {
+    q_rsqrt(inputs[i]);
+    q_rsqrt_2(inputs[i]);
+    inverse_sqrt(inputs[i]);
+  }
   return 0;
 }

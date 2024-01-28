@@ -13,11 +13,19 @@
 
 21/01/2024 : J'ai décrit à quoi servait l'algorithme (je risque de le modifier par la suite)
 
-23/01/2024 : En vue d'expliquer pourquoi utiliser cet algorithme, j'ai voulu montrer le nombre d'opérations faites entre l'approche directe "reverse_sqrt" qui renvoie simplement 1/sqrt(x) et q_rsqrt(x)
-  J'ai d'abord pensé à compiler mon fichier .c pour obtenir le code compilé en assembleur et compter le nombre d'opérations (il se situe toujours à l'adresse c/fast_rsqrt.s)
-  Mais problème : la fonction inverse_sqrt utilise la librairie "math.h", une librairie statique et donc déjà compilée. Je ne peux alors pas voir le nombre d'opérations totales faites par ma fonction.
+23/01/2024 : En vue d'expliquer pourquoi utiliser cet algorithme, j'ai voulu montrer le nombre d'instructions faites entre l'approche directe "reverse_sqrt" qui renvoie simplement 1/sqrt(x) et q_rsqrt(x)
+  J'ai d'abord pensé à compiler mon fichier .c pour obtenir le code compilé en assembleur et compter le nombre d'instructions (il se situe toujours à l'adresse c/fast_rsqrt.s)
+  Mais problème : la fonction inverse_sqrt utilise la librairie "math.h", une librairie statique et donc déjà compilée. Je ne peux alors pas voir le nombre d'instructions totales faites par ma fonction.
   Vient alors le logiciel Valgrind et sa fonctionnalité callgrind, elle permet de récupérer les statistiques d'un code en c.
   Il va alors créer un fichier "callgrind.out.[xx]" avec xx un nombre à 2 chiffres.
   J'ai alors voulu ouvrir ce fichier avec KCacheGrind, un logiciel pour visualiser plus facilement les données de ce fichier.
   Encore un problème : KCacheGrind n'est plus téléchargeable sur Windows. J'ai alors téléchargé une version précompilée pour Windows du logiciel "QCacheGrind" et j'ai enfin pu voir le nombre d'appels
   par fonction (et le résultat est sans appel, q_rsqrt fait ~ 17 fois moins d'appel que reverse_sqrt)
+
+24 + 25/01/2024 : Je viens d'apprendre que mon approche était partiellement fausse. La comparaison du nombre d'appels est totalement éronnée.
+  Pourquoi ? Car depuis le temps, les ordinateurs ont beaucoup évolué et notamment grâce aux nouvelles instructions SIMD. J'ai ajouté un lien vers une personne parlant de pourquoi l'algorithme n'affiche pas autant d'amélioration par rapport à avant.
+  J'ai cependant laissé un screenshot de mes résultats callgrind ainsi que les algorithmes compilés dans mon code source (dans les ./c et ./images)
+
+26/01/2024 : J'ai fait des recherches sur le fonctionnement du standard de représentation de flottants "IEEE 754", utilisée par l'algorithme.
+
+28/01/2024 : J'ai regardé l'explication de la vidéo de "Nemean" (vidéo dans la bibliographie) et j'ai retranscrit les étapes utilisées
