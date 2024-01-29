@@ -31,58 +31,57 @@
     <br>
     Cet algorithme est alors devenu une icône dans le monde de l'optimisation lors de la publication Open Source du code du jeu Quake III, dans lequel il était utilisé.
 </p>
+<pre>
+  <code>
+    float q_rsqrt(float number){
+      long i;
+      float x2, y;
+      const float threehalfs = 1.5F;
+      
+      x2 = number * 0.5F;
+      y  = number;
+      i  = * ( long * ) &y;                       // evil floating point bit level hacking
+      i  = 0x5f3759df - ( i >> 1 );               // what the f*ck?
+      y  = * ( float * ) &i;
+      y  = y * ( threehalfs - ( x2 * y * y ) );   // 1st iteration
+      // y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
+      
+      return y;
+    }
+  </code>
+</pre>
+<p>Tester le code</p>
+<p style="display:inline">Entrez une valeur :</p>
+<input type="text" placeholder="10.5" step=0.000001 id="q-sqrt-input">
+<button id="exec-q-sqrt">Exécuter</button>
+<div class="code-result-div" id="q-sqrt-result-div">
+  <p class="code-result" id="q-sqrt-result">Résultat</p>
+</div>
   <h3>À quoi sert la racine carrée inverse ?</h3>
   <p>
   La racine carrée inverse est une fonction composée utilisée en géométrie, aussi bien dans l'espace que dans le plan.
     <br>
   Partons d'un vecteur \(\vec{v} = \pmatrix{x \\ y}\).
     <br>
-  Nous voulons que la somme de ses coordonnées soit égale à 1.
+  Nous voulons que la norme de ce vecteur soit égale à 1.
     <br>
   Ce processus s'appelle la normalisation.
     <br>
-  Pour obtenir \(\vec{w}\) ; représentant le résultat de la normalisation de \(\vec{v}\), nous devons diviser chaque valeur de \(\vec{v}\) par 
+  Pour obtenir \(\hat{w}\) ; représentant le résultat de la normalisation de \(\vec{v}\), nous devons diviser chaque valeur de \(\vec{v}\) par 
     <br>
   Soit \(\alpha\) la norme euclidienne de \(\vec{v}\) :
   $$\alpha = \sqrt{x_{\vec{v}}^2 + y_{\vec{v}}^2}$$
     <br>
-    Ainsi, on peut calculer \(\vec{w}\) :
-    $$\vec{w} = \pmatrix{\frac{x_\vec{v}}{\alpha}\\\frac{y_\vec{v}}{\alpha}}$$
+    Ainsi, on peut calculer \(\hat{w}\) :
+    $$\hat{w} = \pmatrix{\frac{x_\vec{v}}{\alpha}\\\frac{y_\vec{v}}{\alpha}}$$
     <br>
-    Maintenant, notre vecteur est normalisé.
+    Maintenant, notre vecteur est normalisé. On appelle alors ce vecteur le vecteur "unitaire".
     <br>
     Voici une démonstration de La normalisation d'un vecteur (ici en 2 dimensions).
-    Vous verrez aussi par la même occasion que l'algorithme présenté est fiable et n'a une marche d'erreur .
+    Vous verrez aussi par la même occasion que l'algorithme présenté est fiable et n'a une marche d'erreur.
 
   
   </p>
-  
-  <pre>
-    <code>
-      float q_rsqrt(float number){
-        long i;
-        float x2, y;
-        const float threehalfs = 1.5F;
-        
-        x2 = number * 0.5F;
-        y  = number;
-        i  = * ( long * ) &y;                       // evil floating point bit level hacking
-        i  = 0x5f3759df - ( i >> 1 );               // what the f*ck?
-        y  = * ( float * ) &i;
-        y  = y * ( threehalfs - ( x2 * y * y ) );   // 1st iteration
-        // y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
-        
-        return y;
-      }
-    </code>
-  </pre>
-  <p>Tester le code</p>
-  <p style="display:inline">Entrez une valeur :</p>
-  <input type="text" placeholder="10.5" step=0.000001 id="q-sqrt-input">
-  <button id="exec-q-sqrt">Exécuter</button>
-  <div class="code-result-div" id="q-sqrt-result-div">
-    <p class="code-result" id="q-sqrt-result">Résultat</p>
-  </div>
 
   <div id="demo-grid">
     <div id="demo">
@@ -165,8 +164,9 @@
     <br>
     On peut admettre \(\mu\) un nombre choisi de manière arbitraire permettant de se rapprocher du résultat.
     <br>
-    Ici, le créateur de l'algorithme a décidé que \(\mu = 0.0430\) car il a conclu que ce nombre donnait, en moyenne, les résultats les plus proches pour les nombres entre 0 et 1. Donc :
+    Ici, le créateur de l'algorithme a décidé que \(\mu = 0.0450466\) car il a conclu que ce nombre donnait, en moyenne, les résultats les plus proches pour les nombres entre 0 et 1. Donc :
     $$\log_2(1 + x) \approx x + \mu$$
+    <i>Une meilleure valeur pour \(\mu\) serait plutôt aux alentours de 0.0430</i>
     <br>
     On va donc écrire la formule au complet avec notre approximation :
     $$\frac{M}{2^{23}} + \mu + E - 127 = \frac{1}{2^{23}}\times(\textcolor{red}{2^{23}\times E + M}) + \mu + 127$$
@@ -177,7 +177,22 @@
   </p>
   <h4>"evil floating point bit level hacking"</h4>
   <p>
-    Il faut savoir que "bit shift" un nombre vers la gauche le double, et bit shift un nombre vers la droite le divise par 2 (et l'arrondit à l'inférieur).
+    Cette ligne semble assez compliquée mais elle est en vérité plutôt simple. 
+    <br>
+    On veut obtenir une variable de type "long", soit un nombre de même taille (en bits) qu'un flottant.
+    <br>
+    Problème : on ne veut pas que notre flottant soit tronqué. On va alors vouloir garder la même valeur binaire et simplement l'interpréter comme un long et pas comme un flottant.
+    <br>
+    Pour cela, on va prendre l'adresse de y, puis l'interpréter en adresse de long, puis récupérer la valeur à cette adresse.
+    <br>
+    <br>
+    Pourquoi veut-on un long au lieu d'un flottant ? À cause du "bit-shifting"
+    <br>
+    Le bit-shifting consiste à prendre tous les bits d'un nombre et à les décaler vers la gauche ou vers la droite. 
+    <br>
+    Ainsi, Lorsqu'on bit-shift un nombre vers la gauche on le double et lorsqu'on le bit-shift vers la droite on le divise par 2 (en arrondissant à l'inférieur lorsque le résultat n'est pas un entier relatif)
+    <br>
+    On va donc pouvoir diviser par 2 notre flottant, et c'est ce que l'on veut. 
   </p>
   <h4>"What the f*ck"</h4>
   <p>
@@ -207,7 +222,7 @@
     <br>
     On a déjà montré que \(\frac{1}{2}I_x\) pouvait se calculer avec la ligne <code> - (i >> 1)</code>
     Ainsi, Nous n'avons plus qu'à calculer \(\frac{3}{2}2^{23}(127-\mu)\).
-    $$\Big(\frac{3}{2}2^{23}(127-\mu)\Big)_{10} = (\text{0x5f3759df})_{16}$$
+    $$\Big(\frac{3}{2}2^{23}(127-\mu)\Big)_{10} \approx (1597463007)_{10} = (\text{0x5f3759df})_{16}$$
     Donc, on se retrouve avec ce code :
     <code>0x5f3759df - (i >> 1)</code>
   </p>

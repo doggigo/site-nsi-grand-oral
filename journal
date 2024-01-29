@@ -28,4 +28,10 @@
 
 26/01/2024 : J'ai fait des recherches sur le fonctionnement du standard de représentation de flottants "IEEE 754", utilisée par l'algorithme.
 
-28/01/2024 : J'ai regardé l'explication de la vidéo de "Nemean" (vidéo dans la bibliographie) et j'ai retranscrit les étapes utilisées
+28/01/2024 : Pour la ligne "What the F*ck" j'ai regardé l'explication de la vidéo de "Nemean" (vidéo dans la bibliographie) et j'ai retranscrit les étapes utilisées.
+  MAIS il a passé une grosse étape, lorsqu'il a simplifié l'égalité, il a passé ses étapes de calcul.
+  J'ai donc essayé de l'écrire sur une feuille mais j'admet m'être un peu perdu avec cette longue équation.
+  J'ai alors remplacé la représentation binaire de nos deux nombres par B pour me simplifier la tâche. 
+  La simplification était alors beaucoup plus simple. J'ai donc réussi à simplifier l'égalité et pu la retranscrire étape par étape sur le site web.
+
+29/01/2024 : après avoir appris qu'un vecteur normalisé donnait "un vecteur unitaire colinéaire avec notre vecteur initial", j'ai décidé réécrire mon paragraphe parlant de l'utilité de la racine carrée inversée.

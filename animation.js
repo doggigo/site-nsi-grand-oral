@@ -60,7 +60,7 @@ function circleAnimation(p) {
 		p.endShape();
 
     if(p.normalized) {
-      p.text(`${p.normalized.x}\n${p.normalized.y}`,500,100);
+      p.text(`x = ${p.normalized.x}\ny = ${p.normalized.y}`,400,100);
       p.displayNormalized();
     }
 	};
