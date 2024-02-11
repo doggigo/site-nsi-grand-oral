@@ -23,3 +23,18 @@ a {
 i {
   color: gray;
 }
+
+h1, h2 {
+  text-align: center;
+}
+
+#sommaire {
+  display: inline-block;
+  padding-right: 50px;
+}
+
+ul, .txt { 
+  padding: 20px;
+  border: black solid 1px;
+  border-radius: 25px;
+}

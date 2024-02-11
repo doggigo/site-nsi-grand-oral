@@ -23,7 +23,8 @@
   par fonction (et le résultat est sans appel, q_rsqrt fait ~ 17 fois moins d'appel que reverse_sqrt)
 
 24 + 25/01/2024 : Je viens d'apprendre que mon approche était partiellement fausse. La comparaison du nombre d'appels est totalement éronnée.
-  Pourquoi ? Car depuis le temps, les ordinateurs ont beaucoup évolué et notamment grâce aux nouvelles instructions SIMD. J'ai ajouté un lien vers une personne parlant de pourquoi l'algorithme n'affiche pas autant d'amélioration par rapport à avant.
+  Pourquoi ? Car depuis le temps, les ordinateurs ont beaucoup évolué et notamment grâce aux nouvelles architectures de processeurs qui permettent de calculer bien plus rapidement la division et la racine carrée. 
+  J'ai ajouté un lien vers une personne parlant de pourquoi l'algorithme n'affiche pas autant d'amélioration par rapport à avant.
   J'ai cependant laissé un screenshot de mes résultats callgrind ainsi que les algorithmes compilés dans mon code source (dans les ./c et ./images)
 
 26/01/2024 : J'ai fait des recherches sur le fonctionnement du standard de représentation de flottants "IEEE 754", utilisée par l'algorithme.

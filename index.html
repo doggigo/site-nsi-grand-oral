@@ -14,7 +14,7 @@
   <h1>Mon grand Oral</h1>
   <h2>Problématique :</h2>
   <h2>"L'algorithme racine carrée inverse rapide : doit-on privilégier les performances en dépit d'un mauvais code ?"</h2>
-  <ul>
+  <ul id="sommaire">
     <h3>Sommaire</h3>
     <!--INFOS :
       temps d'exécution : 3.54ns-->
@@ -23,7 +23,7 @@
     <li><a href="#bibliographie">Bibliographie</a></li>
   </ul>
   <h3 id="presentation">Présentation</h3>
-  <p>L'algorithme "fast inverse square root" est un algorithme créé par Greg Walsh, un développeur de la compagnie Ardent. 
+  <p class="txt">L'algorithme "fast inverse square root" est un algorithme créé par Greg Walsh, un développeur de la compagnie Ardent. 
     <br>
     Il se Repose sur les travaux de William Kahan ayant publié 10 ans avant montrant comment calculer une racine carrée en manipulant des bits et en utilisant la méthode de Newton.
     <br>
@@ -58,7 +58,7 @@
   <p class="code-result" id="q-sqrt-result">Résultat</p>
 </div>
   <h3>À quoi sert la racine carrée inverse ?</h3>
-  <p>
+  <p class="txt">
   La racine carrée inverse est une fonction composée utilisée en géométrie, aussi bien dans l'espace que dans le plan.
     <br>
   Partons d'un vecteur \(\vec{v} = \pmatrix{x \\ y}\).
@@ -75,7 +75,8 @@
     Ainsi, on peut calculer \(\hat{w}\) :
     $$\hat{w} = \pmatrix{\frac{x_\vec{v}}{\alpha}\\\frac{y_\vec{v}}{\alpha}}$$
     <br>
-    Maintenant, notre vecteur est normalisé. On appelle alors ce vecteur le vecteur "unitaire".
+    Maintenant, notre vecteur est normalisé. On appelle alors ce vecteur un vecteur "unitaire".
+    \(\hat{w}\) est donc un vecteur unitaire colinéaire à \(\)
     <br>
     Voici une démonstration de La normalisation d'un vecteur (ici en 2 dimensions).
     Vous verrez aussi par la même occasion que l'algorithme présenté est fiable et n'a une marche d'erreur.
@@ -94,7 +95,7 @@
   <h3>Pourquoi utilisait-on cet algorithme ?</h3>
   <i>En effet, "utilisait", car depuis les nouveaux processeurs et architectures, il n'y a plus besoin de notre algorithme 
   (à moins de faire des recherches sur les anciens ordinateurs ou de travailler sur des consoles rétro). L'algorithme ci-dessous fonctionnera même mieux avec les architecture modernes que notre algorithme q_rsqrt, il reste néanmoins une belle preuve d'ingénierie et ouvre un sujet intéressant sur l'optimisation</i>
-  <p>Il est vrai que le code est très dur à comprendre.
+  <p class="txt">Il est vrai que le code est très dur à comprendre.
     <br>
     Alors pourquoi n'utilisait-on pas un algorithme plus simple, tel que celui-ci ?
     <pre>
@@ -114,7 +115,7 @@
   </p>
   <h3>Comment fonctionne l'algorithme ?</h3>
   <h4>Le standard IEEE 754</h4>
-  <p>
+  <p class="txt">
     Le standard IEEE 754 est le tout premier standard pour représenter des nombres flottants.
     <br>
     Voici son agencement :
@@ -123,7 +124,7 @@
   <img src="images/IEEE_754_Single_Floating_Point_Format.png" alt="1er bit : le signe ; 2-9emes bits : l'exposant ; 9-32emes bits : la mantisse">
   <i>Source : IEEE 754-1985 - Wikipedia</i>
 
-  <p>C'est de cette manière que les nombres flottants sont représentés en C, s'inspirant de la notation scientifique:
+  <p class="txt">C'est de cette manière que les nombres flottants sont représentés en C, s'inspirant de la notation scientifique:
     <br>
     \(a = M\times B^n\) avec "a" le nombre, "B" la base, "M" la mantisse (comprise entre 1 et B exclu) et "n" l'exposant
     <br>
@@ -145,7 +146,7 @@
     <br>
   </p>
   <h4>Manipuler un nombre binaire</h4>
-  <p>
+  <p class="txt">
     Puisque maintenant nous possédons la mantisse M et l'exposant E, on peut retrouver l'écriture totale de notre chiffre :
     <br>
     Notre nombre E doit être au début de notre représentation binaire, on le multiplie donc par 2^23 afin qu'il soit après la mantisse.
@@ -157,7 +158,7 @@
     $$(1 + \frac{M}{2^{23}})\times 2^{E-127}$$
     <br>
     On va essayer de le simplifier en prenant le logarithme de notre formule :
-    $$\log_2{(1 + \frac{M}{2^{23}})\times 2^{E-127}} = \log_2{(1 + \frac{M}{2^{23}})} + E-127$$
+    $$\log_2{\Big(1 + \frac{M}{2^{23}}\times 2^{E-127}\Big)} = \log_2{\Big(1 + \frac{M}{2^{23}}\Big)} + E-127$$
     On va être bloqués à cette étape. Mais puisque le but de notre algorithme est d'avoir une approximation, on va pouvoir simplifier.
     <br>
     Car lorsque x est un petit nombre, on remarque que : \(\log_2(1 + x) \approx x\)
@@ -176,7 +177,7 @@
     On peut donc dire que si n un nombre flottant, \(n \approx log_2(n)\)
   </p>
   <h4>"evil floating point bit level hacking"</h4>
-  <p>
+  <p class="txt">
     Cette ligne semble assez compliquée mais elle est en vérité plutôt simple. 
     <br>
     On veut obtenir une variable de type "long", soit un nombre de même taille (en bits) qu'un flottant.
@@ -195,7 +196,7 @@
     On va donc pouvoir diviser par 2 notre flottant, et c'est ce que l'on veut. 
   </p>
   <h4>"What the f*ck"</h4>
-  <p>
+  <p class="txt">
     on veut obtenir la racine carrée inverse, soit \(\frac{1}{\sqrt{x}}\)
     <br>
     on sait que \(x^{-1} = \frac{1}{x}\) et que \(x^\frac{1}{2} = \sqrt x\)
@@ -212,20 +213,34 @@
     Admettons que \(\Gamma = x^{-\frac{1}{2}}\), alors \(\log_2(\Gamma) =-\frac{1}{2}\times\log_2(x)\)
     posons \(B_n\) la représentation binaire de \(n\).
     En remplaçant cette égalité par la représentation binaire de \(x\) et \(\Gamma\), on obtient :
-    $$\frac{1}{2^{23}}I_\Gamma + \mu - 127 = -\frac{1}{2}\Big(\frac{1}{2^{23}}I_x + \mu - 127\Big)$$
-    $$\frac{I_\Gamma}{2^{23}} = -\frac{1}{2}\Big(\frac{I_x}{2^{23}} - (127 - \mu)\Big) + (127-\mu)$$
-    $$I_\Gamma = 2^{23}(-\frac{1}{2}(\frac{I_x}{L} - (127 - \mu)) + (127 - \mu)) $$
-    $$I_\Gamma = -\frac{1}{2}2^{23}(\frac{I_x}{2^{23}} - (127 - \mu)) + 2^{23}(127-\mu)$$
-    $$I_\Gamma = -\frac{1}{2}I_x + \frac{1}{2}2^{23}(127-\mu) + 2^{23}(127 - \mu)$$
-    $$I_\Gamma = \frac{3}{2}2^{23}(127-\mu) - \frac{1}{2}I_x$$
-    Donc, pour trouver la valeur binaire de \(\Gamma\), on va devoir soustraire \(\frac{1}{2}I_x\) à \(\frac{3}{2}2^{23}(127-\mu)\).
+    $$\frac{1}{2^{23}}B_\Gamma + \mu - 127 = -\frac{1}{2}\Big(\frac{1}{2^{23}}B_x + \mu - 127\Big)$$
+    $$\frac{B_\Gamma}{2^{23}} = -\frac{1}{2}\Big(\frac{B_x}{2^{23}} - (127 - \mu)\Big) + (127-\mu)$$
+    $$B_\Gamma = 2^{23}(-\frac{1}{2}(\frac{B_x}{L} - (127 - \mu)) + (127 - \mu)) $$
+    $$B_\Gamma = -\frac{1}{2}2^{23}(\frac{B_x}{2^{23}} - (127 - \mu)) + 2^{23}(127-\mu)$$
+    $$B_\Gamma = -\frac{1}{2}B_x + \frac{1}{2}2^{23}(127-\mu) + 2^{23}(127 - \mu)$$
+    $$B_\Gamma = \frac{3}{2}2^{23}(127-\mu) - \frac{1}{2}B_x$$
+    Donc, pour trouver la valeur binaire de \(\Gamma\), on va devoir soustraire \(\frac{1}{2}B_x\) à \(\frac{3}{2}2^{23}(127-\mu)\).
     <br>
-    On a déjà montré que \(\frac{1}{2}I_x\) pouvait se calculer avec la ligne <code> - (i >> 1)</code>
+    On a déjà montré que \(\frac{1}{2}B_x\) pouvait se calculer avec la ligne <code> - (i >> 1)</code>
     Ainsi, Nous n'avons plus qu'à calculer \(\frac{3}{2}2^{23}(127-\mu)\).
     $$\Big(\frac{3}{2}2^{23}(127-\mu)\Big)_{10} \approx (1597463007)_{10} = (\text{0x5f3759df})_{16}$$
     Donc, on se retrouve avec ce code :
     <code>0x5f3759df - (i >> 1)</code>
   </p>
+  <!--TODO :
+    - Méthode de Newton
+    - Ce code est-il toujours intéressant ?
+    - 2e "Partie"
+      - Définition bon/mauvais code
+      - Pourquoi écrire du bon code ?
+      - Préférer les performances au mauvais code est-il toujours en vigueur aujourd'hui ? Si oui, dans quel cas ?
+        - Aujourd'hui, les gains de performances avec ce genre d'algorithmes "farfelus" sont très faibles, notamment grâce aux SIMD      
+          mais certains le font toujours, notamment les meilleurs développeurs web car javascript est un langage lent et a toujours besoin d'être optimisé
+            PS : "Hermes" de la compagnie Meta est un moteur javascript permettant d'optimiser le lancement de ces applications 
+      - 
+    - CSS
+  -->
+
   <hr>
   <h3 id="bibliographie">Bibliographie</h3>
   <a href="https://www.beyond3d.com/content/articles/15/">"Origin of Quake3's Fast InvSqrt()" - Beyond3D</a>
@@ -233,11 +248,12 @@
   <a href="https://fr.wikipedia.org/wiki/Racine_carr%C3%A9e_inverse_rapide">Racine carrée inversée - Wikipedia</a>
   <a href="https://www.geeksforgeeks.org/compiling-a-c-program-behind-the-scenes/">Compiling a C Program: Behind the Scenes (Geeks for Geeks)</a>
   <a href="https://www.youtube.com/watch?v=p8u_k2LIZyo">"Fast Inverse Square Root — A Quake III Algorithm" - Nemean (YouTube)</a>
+  <a href="https://www.youtube.com/watch?v=NCuf2tjUsAY">The Fast Inverse Square Root -- 0x5f3759df explained!!</a>
   <a href="https://www.youtube.com/watch?v=tmb6bLbxd08">"The Truth about the Fast Inverse Square Root on the N64" - Kaze Emmanuar (YouTube)</a>
   <a href="https://www.youtube.com/watch?v=4LiP39gJuqE">"Optimizing with "Bad Code"" - Kaze Emmanuar (YouTube)</a>
+  <a href="https://youtu.be/uCv5VRf8op0">"REVEALED: Quake III's SECRET Algorithm!" - Dave's Garage (YouTube)</a>
   <a href="https://www.linkedin.com/pulse/fast-inverse-square-root-still-armin-kassemi-langroodi">"Is Fast Inverse Square Root still Fast?" - Armin Kassemi Langroodi (LinkedIn)</a>
-
-
+  <a href="http://www.matrix67.com/data/InvSqrt.pdf">"Fast Inverse Square Root" - Chris Lomont</a>
 
   <script src="load.js"></script>
   <script type="module" src="main.js"></script>
