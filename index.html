@@ -8,6 +8,7 @@
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
   </script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css">
   <title>Le Grand Oral</title>
 </head>
 <body>
@@ -32,7 +33,7 @@
     Cet algorithme est alors devenu une icône dans le monde de l'optimisation lors de la publication Open Source du code du jeu Quake III, dans lequel il était utilisé.
 </p>
 <pre>
-  <code>
+  <code class="language-clike">
     float q_rsqrt(float number){
       long i;
       float x2, y;
@@ -99,7 +100,7 @@
     <br>
     Alors pourquoi n'utilisait-on pas un algorithme plus simple, tel que celui-ci ?
     <pre>
-      <code>
+      <code class="language-clike">
         #include &#60;math.h&#62;
         float inverse_sqrt(float number) {
           return 1 / sqrt(number);
@@ -207,7 +208,7 @@
     $$x \approx \log_2{x} \Rightarrow x^{-\frac{1}{2}} \approx \log_2(x^{-\frac{1}{2}})$$
     $$\log_2(x^{-\frac{1}{2}}) = -\frac{1}{2}\times\log_2{x}$$
     Vous allez alors peut-être vous dire qu'il y a une division dans cet algorithme, mais nous avons précédemment parlé de cette technique s'appliquant aux longs, permettant de diviser un nombre par 2 sans avoir à faire de division
-    Donc : \(-\frac{1}{2}\log_2(x) = \)<code> - (i >> 1)</code>
+    Donc : \(-\frac{1}{2}\log_2(x) = \)<code class="language-clike"> - (i >> 1)</code>
     Mais pourquoi a-t-on cette constante "0x5f3759df" semblant insignifiante ?
     <br>
     Admettons que \(\Gamma = x^{-\frac{1}{2}}\), alors \(\log_2(\Gamma) =-\frac{1}{2}\times\log_2(x)\)
@@ -221,11 +222,11 @@
     $$B_\Gamma = \frac{3}{2}2^{23}(127-\mu) - \frac{1}{2}B_x$$
     Donc, pour trouver la valeur binaire de \(\Gamma\), on va devoir soustraire \(\frac{1}{2}B_x\) à \(\frac{3}{2}2^{23}(127-\mu)\).
     <br>
-    On a déjà montré que \(\frac{1}{2}B_x\) pouvait se calculer avec la ligne <code> - (i >> 1)</code>
+    On a déjà montré que \(\frac{1}{2}B_x\) pouvait se calculer avec la ligne <code class="language-clike"> - (i >> 1)</code>
     Ainsi, Nous n'avons plus qu'à calculer \(\frac{3}{2}2^{23}(127-\mu)\).
     $$\Big(\frac{3}{2}2^{23}(127-\mu)\Big)_{10} \approx (1597463007)_{10} = (\text{0x5f3759df})_{16}$$
     Donc, on se retrouve avec ce code :
-    <code>0x5f3759df - (i >> 1)</code>
+    <code class="language-clike">0x5f3759df - (i >> 1)</code>
   </p>
   <!--TODO :
     - Méthode de Newton
@@ -258,5 +259,6 @@
   <script src="load.js"></script>
   <script type="module" src="main.js"></script>
   <script type="module" src="animation.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
 </body>
 </html>
