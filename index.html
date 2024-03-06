@@ -247,24 +247,24 @@
     <br>
     Pour se rapprocher de la racine d'une fonction à partir d'une valeur initiale $a_0$, on trace la tangente de la courbe de la fonction au point d'abscisse $a_0$, la valeur $a_1$ est l'abscisse de la racine de la fonction définissant notre tangente.
     <br>
-    $T_{a_0} : f'(x)(x-a_0) + f(x)$
+    $T_{a_0} : f'(a_0)(x-a_0) + f(a_0)$
     <br>
-    Donc l'equation $(E)$ définissant l'abscisse du point pour lequel $T_{a_0}$ s'annule est définie de la manière suivante : $(E) : f'(x)(x-a_0) + f(x) = 0$
+    Donc l'equation $(E)$ définissant l'abscisse du point pour lequel $T_{a_0}$ s'annule est définie de la manière suivante : $(E) : f'(a_0)(x-a_0) + f(a_0) = 0$
     <br>
     $$
     \begin{align*}
-    f'(x)(x-a_0) + f(x) = 0 \: \Leftrightarrow \:
-    xf'(x) - a_0f'(x) + f(x) = 0 \: \Leftrightarrow \:
-    xf'(x) = a_0f'(x) - f(x) \: \Leftrightarrow \:
-    x = \frac{a_0f'(x) - f(x)}{f'(x)} \: \Leftrightarrow \:
-    x = a_0 - \frac{f(x)}{f'(x)}
+    f'(a_0)(x-a_0) + f(a_0) = 0 \: \Leftrightarrow \:
+    xf'(a_0) - a_0f'(a_0) + f(a_0) = 0 \: \Leftrightarrow \:
+    xf'(a_0) = a_0f'(a_0) - f(a_0) \: \Leftrightarrow \:
+    x = \frac{a_0f'(a_0) - f(a_0)}{f'(a_0)} \: \Leftrightarrow \:
+    x = a_0 - \frac{f(a_0)}{f'(a_0)}
     \end{align*}
     $$
-    On se retrouve donc avec l'equation $x = a_0 - \frac{f(x)}{f'(x)}$
+    On se retrouve donc avec l'equation $x = a_0 - \frac{f(a_0)}{f'(a_0)}$
     <br>
     on peut l'interprêter sous la forme d'une suite, ce qui nous donne la suite $(u_n)$ définie par la formule $u_{n+1} = u_n - \frac{f(u_n)}{f'(u_n)}$
     <br>
-    On donc pouvoir simplement remplacer $f(x)$ et $f'(x)$ par notre fonction $g$ :
+    On va donc pouvoir simplement remplacer $f(a_0)$ et $f'(a_0)$ par notre fonction $g$ :
     $$
     \begin{align*}
     g'(y) = -\frac{2}{y^3} \\
