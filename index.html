@@ -21,10 +21,17 @@
   <h2>"L'algorithme racine carrée inverse rapide : doit-on privilégier les performances en dépit d'un mauvais code ?"</h2>
   <ul id="sommaire">
     <h3>Sommaire</h3>
-    <!--INFOS :
-      temps d'exécution : 3.54ns-->
+    <h4>Partie 1</h4>
     <li> <a href="#presentation">Présentation de l'algorithme</a></li>
     <li> <a href="#utilite">À quoi sert cet algorithme ?</a></li>
+    <li><a href="#pourquoi">Pourquoi utilisait-on cet algorithme ?</a></li>
+    <li><a href="#fonctionnement">Comment fonctionne l'algorithme ?</a></li>
+    <li><a href="#interet">Cet algorithme est-il toujours intéressant ?</a></li>
+    <h4>Partie 2</h4>
+    <li><a href="#def-bon-mauvais">Qu'appelle-t-on du "bon"/"mauvais" code ?</a></li>
+    <li><a href="#perf-ou-bon">Préférer les performances au mauvais code est-il toujours en vigueur aujourd'hui ? Si oui, dans quel cas ?</a></li>
+    <h4>Conclusion</h4>
+    <li><a href="#">Phrase de fin</a></li>
     <li><a href="#bibliographie">Bibliographie</a></li>
   </ul>
   <h3 id="presentation">Présentation</h3>
@@ -97,7 +104,7 @@
   </div>
   <button id="normalize-button">Normaliser le vecteur</button>
 
-  <h3>Pourquoi utilisait-on cet algorithme ?</h3>
+  <h3 id="pourquoi">Pourquoi utilisait-on cet algorithme ?</h3>
   <i>En effet, "utilisait", car depuis les nouveaux processeurs et architectures, il n'y a plus besoin de notre algorithme 
   (à moins de faire des recherches sur les anciens ordinateurs ou de travailler sur des consoles rétro). L'algorithme ci-dessous fonctionnera même mieux avec les architecture modernes que notre algorithme q_rsqrt, il reste néanmoins une belle preuve d'ingénierie et ouvre un sujet intéressant sur l'optimisation</i>
   <p class="txt">Il est vrai que le code est très dur à comprendre.
@@ -118,7 +125,7 @@
     En moyenne, q_rsqrt était à peu près 4 fois plus rapide que inverse_sqrt en présentant une précision de plus de 99% avec une seule itération de la méthode de Newton.
     <br>
   </p>
-  <h3>Comment fonctionne l'algorithme ?</h3>
+  <h3 id="fonctionnement">Comment fonctionne l'algorithme ?</h3>
   <h4>Le standard IEEE 754</h4>
   <p class="txt">
     Le standard IEEE 754 est le tout premier standard pour représenter des nombres flottants.
@@ -232,8 +239,8 @@
     Donc, on se retrouve avec ce code :
     <code class="language-clike">0x5f3759df - (i >> 1)</code>
   </p>
-  <h3>La méthode de Newton-Raphson</h3>
-  <p>
+  <h4>La méthode de Newton-Raphson</h4>
+  <p class="txt">
     Comme vous avez pu le constater, le code des lignes précédentes est très imprécis et peut donner des résultats assez éloignés de la réalité.
     Heureusement, un certain Isaac Newton a découvert une méthode pour se rapprocher de la racine d'une fonction.
     Si nous trouvons une fonction qui admet pour racine le résultat que nous recherchons, cette méthode est parfaitement ce qu'il nous faut !
@@ -278,7 +285,7 @@
     On se retrouve alors avec l'écriture $\frac{u_n(3 - u^2x)}{2}$ soit $u_n(\frac{3}{2} - \frac{x}{2} \times u_n \times u_n)$, soit la même chose que la ligne <code class="language-clike">y  = y * ( threehalfs - ( x2 * y * y ) );</code>
     
   </p>
-  <h3>Cet algorithme est-il toujours intéressant ?</h3>
+  <h3 id="interet">Cet algorithme est-il toujours intéressant ?</h3>
   <p>
     La réponse est : Non.
     <br>
@@ -289,8 +296,8 @@
     De plus, les jeux actuels demandent aux calculs d'être très précis, si on veut que l'algorithme de la racine carrée inverse rapide soit assez précis pour les jeux d'aujourd'hui, on devrait utiliser au minimum 6 itérations de la méthode de Newton. Notre algorithme n'aurait alors plus grand intérêt.
   </p>
   <h2>Doit-on alors privilégier un mauvais code ?</h2>
-  <h3>Qu'appelle-t-on du "bon"/"mauvais" code ?</h3>
-  <p>
+  <h3 id="def-bon-mauvais">Qu'appelle-t-on du "bon"/"mauvais" code ?</h3>
+  <p class="txt">
     Les développeurs et ingénieurs fonctionnent rarement seuls, travaillent en équipe sur le même code. Chacun doit alors pouvoir comprendre le code de l'autre afin d'avancer dans le projet.
     <br>
     On a vu que cet algorithme, pour quelqu'un qui n'a reçu aucune explication sur le fonctionnement de celui-ci, est incompréhensible.
@@ -299,8 +306,8 @@
     <br>
     Ce que je vais appeler "mauvais code" par la suite sera uniquement un fonctionnement obscure et peu compréhensible. (Un bon code est aussi caractérisé par le suivi de standards ainsi que la commentation du code mais ces critères n'affectent pas les performances) 
   </p>
-  <h3>Préférer les performances au mauvais code est-il toujours en vigueur aujourd'hui ? Si oui, dans quel cas ?</h3>
-  <p>
+  <h3 id="perf-ou-bon">Préférer les performances au bon code est-il toujours en vigueur aujourd'hui ? Si oui, dans quel cas ?</h3>
+  <p class="txt">
     À l'époque de Quake, les performances comptaient énormément. On se devait alors évidemment de mettre en place les algorithmes les plus optimisés possible afin d'obtenir des performances décentes.
     Mais maintenant, avec toutes les technologies que l'on possède, les développeurs de jeux se posent de moins-en-moins la question de l'optimisation.
     Les gains de vitesse par de tels algorithmes sont de moins en moins visibles, on préfèrera se concentrer sur des problèmes de complexité plutôt que des problèmes de vitesse. 
@@ -319,12 +326,6 @@
   </p>
   <p>
   <!--TODO :
-    - 2e "Partie"
-      - Préférer les performances au mauvais code est-il toujours en vigueur aujourd'hui ? Si oui, dans quel cas ?
-        - Aujourd'hui, les gains de performances avec ce genre d'algorithmes "farfelus" sont très faibles, notamment grâce aux SIMD      
-          mais certains le font toujours, notamment les meilleurs développeurs web car javascript est un langage lent et a toujours besoin d'être optimisé
-            PS : "Hermes" de la compagnie Meta est un moteur javascript permettant d'optimiser le lancement de ces applications 
-      - 
     - CSS
   -->
 
