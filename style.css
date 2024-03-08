@@ -79,6 +79,7 @@ ul, .txt {
   padding: 20px;
   border: black solid 1px;
   border-radius: 25px;
+  list-style: none;
 }
 
 img {
