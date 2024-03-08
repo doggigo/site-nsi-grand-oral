@@ -73,22 +73,22 @@
   <p class="txt">
   La racine carrée inverse est une fonction composée utilisée en géométrie, aussi bien dans l'espace que dans le plan.
     <br>
-  Partons d'un vecteur $\vec{v} = \pmatrix{x \\ y}$.
+  Partons d'un vecteur \(\vec{v} = \pmatrix{x \\ y}\).
     <br>
   Nous voulons que la norme de ce vecteur soit égale à 1.
     <br>
   Ce processus s'appelle la normalisation.
     <br>
-  Pour obtenir $\hat{w}$ ; représentant le résultat de la normalisation de $\vec{v}$, nous devons diviser chaque valeur de $\vec{v}$ par 
+  Pour obtenir \(\hat{w}\) ; représentant le résultat de la normalisation de \(\vec{v}\), nous devons diviser chaque valeur de \(\vec{v}\) par 
     <br>
-  Soit $\alpha$ la norme euclidienne de $\vec{v}$ :
+  Soit \(\alpha\) la norme euclidienne de \(\vec{v}\) :
   $$\alpha = \sqrt{x_{\vec{v}}^2 + y_{\vec{v}}^2}$$
     <br>
-    Ainsi, on peut calculer $\hat{w}$ :
+    Ainsi, on peut calculer \(\hat{w}\) :
     $$\hat{w} = \pmatrix{\frac{x_\vec{v}}{\alpha}\\\frac{y_\vec{v}}{\alpha}}$$
     <br>
     Maintenant, notre vecteur est normalisé. On appelle alors ce vecteur un vecteur "unitaire".
-    $\hat{w}$ est donc un vecteur unitaire colinéaire à $\vec v$
+    \(\hat{w}$ est donc un vecteur unitaire colinéaire à $\vec v\)
     <br>
     Voici une démonstration de La normalisation d'un vecteur (ici en 2 dimensions).
     Vous verrez aussi par la même occasion que l'algorithme présenté est fiable et n'a une marche d'erreur.
@@ -138,7 +138,7 @@
 
   <p class="txt">C'est de cette manière que les nombres flottants sont représentés en C, s'inspirant de la notation scientifique:
     <br>
-    $a = M\times B^n$ avec "a" le nombre, "B" la base, "M" la mantisse (comprise entre 1 et B exclu) et "n" l'exposant
+    \(a = M\times B^n\) avec "a" le nombre, "B" la base, "M" la mantisse (comprise entre 1 et B exclu) et "n" l'exposant
     <br>
     On peut donc distinguer 3 parties :
     <br>
@@ -163,7 +163,7 @@
     <br>
     Notre nombre E doit être au début de notre représentation binaire, on le multiplie donc par 2^23 afin qu'il soit après la mantisse.
     <br>
-    Ce qui nous donne : $a = 2^{23} \times E + M$
+    Ce qui nous donne : \(a = 2^{23} \times E + M\)
     <br>
     Alors, pour récupérer notre nombre (en base binaire) à partir de la norme IEEE754, on a alors à effectuer cette formule :
     <br>
@@ -173,20 +173,20 @@
     $$\log_2{\Big(1 + \frac{M}{2^{23}}\times 2^{E-127}\Big)} = \log_2{\Big(1 + \frac{M}{2^{23}}\Big)} + E-127$$
     On va être bloqués à cette étape. Mais puisque le but de notre algorithme est d'avoir une approximation, on va pouvoir simplifier.
     <br>
-    Car lorsque x est un petit nombre, on remarque que : $\log_2(1 + x) \approx x$
+    Car lorsque x est un petit nombre, on remarque que : \(\log_2(1 + x) \approx x\)
     <br>
-    On peut admettre $\mu$ un nombre choisi de manière arbitraire permettant de se rapprocher du résultat.
+    On peut admettre \(\mu\) un nombre choisi de manière arbitraire permettant de se rapprocher du résultat.
     <br>
-    Ici, le créateur de l'algorithme a décidé que $\mu = 0.0450466$ car il a conclu que ce nombre donnait, en moyenne, les résultats les plus proches pour les nombres entre 0 et 1. Donc :
+    Ici, le créateur de l'algorithme a décidé que \(\mu = 0.0450466\) car il a conclu que ce nombre donnait, en moyenne, les résultats les plus proches pour les nombres entre 0 et 1. Donc :
     $$\log_2(1 + x) \approx x + \mu$$
-    <i>Une meilleure valeur pour $\mu$ serait plutôt aux alentours de 0.0430</i>
+    <i>Une meilleure valeur pour \(\mu\) serait plutôt aux alentours de 0.0430</i>
     <br>
     On va donc écrire la formule au complet avec notre approximation :
     $$\frac{M}{2^{23}} + \mu + E - 127 = \frac{1}{2^{23}}\times(\textcolor{red}{2^{23}\times E + M}) + \mu + 127$$
-    On retrouve notre formule pour obtenir notre représentation binaire $\textcolor{red}{2^{23}\times E + M}$
+    On retrouve notre formule pour obtenir notre représentation binaire \(\textcolor{red}{2^{23}\times E + M}\)
     <br>
-    Ainsi, en appliquant le logarithme binaire sur notre représentation binaire, on obtient notre formule de base, simplement décalée et additionnée à $127 + \mu$
-    On peut donc dire que si n un nombre flottant, $n \approx log_2(n)$
+    Ainsi, en appliquant le logarithme binaire sur notre représentation binaire, on obtient notre formule de base, simplement décalée et additionnée à \(127 + \mu\)
+    On peut donc dire que si n un nombre flottant, \(n \approx log_2(n)\)
   </p>
   <h4>"evil floating point bit level hacking"</h4>
   <p class="txt">
@@ -209,32 +209,32 @@
   </p>
   <h4>"What the f*ck"</h4>
   <p class="txt">
-    on veut obtenir la racine carrée inverse, soit $\frac{1}{\sqrt{x}}$
+    on veut obtenir la racine carrée inverse, soit \(\frac{1}{\sqrt{x}}\)
     <br>
-    on sait que $x^{-1} = \frac{1}{x}$ et que $x^\frac{1}{2} = \sqrt x$
+    on sait que \(x^{-1} = \frac{1}{x}\) et que \(x^\frac{1}{2} = \sqrt x\)
     <br>
-    Ainsi, en combinant les 2, on obtient : $x^{-\frac{1}{2}} = \frac{1}{\sqrt{x}}$
+    Ainsi, en combinant les 2, on obtient : \(x^{-\frac{1}{2}} = \frac{1}{\sqrt{x}}\)
     <br>
-    Puisque nous avons démontré que $x \approx log_2{x}$, on va donc pouvoir avoir :
+    Puisque nous avons démontré que \(x \approx log_2{x}\), on va donc pouvoir avoir :
     $$x \approx \log_2{x} \Rightarrow x^{-\frac{1}{2}} \approx \log_2(x^{-\frac{1}{2}})$$
     $$\log_2(x^{-\frac{1}{2}}) = -\frac{1}{2}\times\log_2{x}$$
     Vous allez alors peut-être vous dire qu'il y a une division dans cet algorithme, mais nous avons précédemment parlé de cette technique s'appliquant aux longs, permettant de diviser un nombre par 2 sans avoir à faire de division
-    Donc : $-\frac{1}{2}\log_2(x) = $<code class="language-clike"> - (i >> 1)</code>
+    Donc : \(-\frac{1}{2}\log_2(x) = \)<code class="language-clike"> - (i >> 1)</code>
     Mais pourquoi a-t-on cette constante "0x5f3759df" semblant insignifiante ?
     <br>
-    Admettons que $\Gamma = x^{-\frac{1}{2}}$, alors $\log_2(\Gamma) =-\frac{1}{2}\times\log_2(x)$
-    posons $B_n$ la représentation binaire de $n$.
-    En remplaçant cette égalité par la représentation binaire de $x$ et $\Gamma$, on obtient :
+    Admettons que \(\Gamma = x^{-\frac{1}{2}}\), alors \(\log_2(\Gamma) =-\frac{1}{2}\times\log_2(x)\\)
+    posons \(B_n\) la représentation binaire de \(n\\).
+    En remplaçant cette égalité par la représentation binaire de \(x\) et \(\Gamma\\), on obtient :
     $$\frac{1}{2^{23}}B_\Gamma + \mu - 127 = -\frac{1}{2}\Big(\frac{1}{2^{23}}B_x + \mu - 127\Big)$$
     $$\frac{B_\Gamma}{2^{23}} = -\frac{1}{2}\Big(\frac{B_x}{2^{23}} - (127 - \mu)\Big) + (127-\mu)$$
     $$B_\Gamma = 2^{23}(-\frac{1}{2}(\frac{B_x}{L} - (127 - \mu)) + (127 - \mu)) $$
     $$B_\Gamma = -\frac{1}{2}2^{23}(\frac{B_x}{2^{23}} - (127 - \mu)) + 2^{23}(127-\mu)$$
     $$B_\Gamma = -\frac{1}{2}B_x + \frac{1}{2}2^{23}(127-\mu) + 2^{23}(127 - \mu)$$
     $$B_\Gamma = \frac{3}{2}2^{23}(127-\mu) - \frac{1}{2}B_x$$
-    Donc, pour trouver la valeur binaire de $\Gamma$, on va devoir soustraire $\frac{1}{2}B_x$ à $\frac{3}{2}2^{23}(127-\mu)$.
+    Donc, pour trouver la valeur binaire de \(\Gamma\), on va devoir soustraire \\(\frac{1}{2}B_x\) à \(\frac{3}{2}2^{23}(127-\mu)\\).
     <br>
-    On a déjà montré que $\frac{1}{2}B_x$ pouvait se calculer avec la ligne <code class="language-clike"> - (i >> 1)</code>
-    Ainsi, Nous n'avons plus qu'à calculer $\frac{3}{2}2^{23}(127-\mu)$.
+    On a déjà montré que \(\frac{1}{2}B_x\\) pouvait se calculer avec la ligne <code class="language-clike"> - (i >> 1)</code>
+    Ainsi, Nous n'avons plus qu'à calculer \(\frac{3}{2}2^{23}(127-\mu)\\).
     $$\Big(\frac{3}{2}2^{23}(127-\mu)\Big)_{10} \approx (1597463007)_{10} = (\text{0x5f3759df})_{16}$$
     Donc, on se retrouve avec ce code :
     <code class="language-clike">0x5f3759df - (i >> 1)</code>
@@ -252,15 +252,15 @@
     y = f(x) \qquad \frac{1}{y^2} = x \Leftrightarrow \frac{1}{y^2} - x = 0    
     \end{align*}
     $$
-    Nous avons donc trouvé une fonction $g : y \rightarrow \frac{1}{y^2} - x$ (avec x la valeur initiale et y le résultat de $\text{q_rsqrt(x)}$) qui s'annule lorsque $\text{q_rsqrt(x)} = \frac{1}{\sqrt x}$ (lorsque $\frac{1}{\frac{1}{\text{q_rsqrt(x)}^2}} = x$)
+    Nous avons donc trouvé une fonction \(g : y \rightarrow \frac{1}{y^2} - x\) (avec x la valeur initiale et y le résultat de \(\text{q_rsqrt(x)}\)) qui s'annule lorsque \(\text{q_rsqrt(x)} = \frac{1}{\sqrt x}\) (lorsque \(\frac{1}{\frac{1}{\text{q_rsqrt(x)}^2}} = x\))
     <br>
     La méthode de Newton est la suivante : 
     <br>
-    Pour se rapprocher de la racine d'une fonction à partir d'une valeur initiale $a_0$, on trace la tangente de la courbe de la fonction au point d'abscisse $a_0$, la valeur $a_1$ est l'abscisse de la racine de la fonction définissant notre tangente.
+    Pour se rapprocher de la racine d'une fonction à partir d'une valeur initiale \(a_0\), on trace la tangente de la courbe de la fonction au point d'abscisse \(a_0\), la valeur \(a_1\) est l'abscisse de la racine de la fonction définissant notre tangente.
     <br>
-    $T_{a_0} : f'(a_0)(x-a_0) + f(a_0)$
+    \(T_{a_0} : f'(a_0)(x-a_0) + f(a_0)\\)
     <br>
-    Donc l'equation $(E)$ définissant l'abscisse du point pour lequel $T_{a_0}$ s'annule est définie de la manière suivante : $(E) : f'(a_0)(x-a_0) + f(a_0) = 0$
+    Donc l'equation \((E)\) définissant l'abscisse du point pour lequel \(T_{a_0}\) s'annule est définie de la manière suivante : \((E) : f'(a_0)(x-a_0) + f(a_0) = 0\\)
     <br>
     $$
     \begin{align*}
@@ -271,18 +271,18 @@
     x = a_0 - \frac{f(a_0)}{f'(a_0)}
     \end{align*}
     $$
-    On se retrouve donc avec l'equation $x = a_0 - \frac{f(a_0)}{f'(a_0)}$
+    On se retrouve donc avec l'equation \(x = a_0 - \frac{f(a_0)}{f'(a_0)}\\)
     <br>
-    on peut l'interprêter sous la forme d'une suite, ce qui nous donne la suite $(u_n)$ définie par la formule $u_{n+1} = u_n - \frac{f(u_n)}{f'(u_n)}$
+    on peut l'interprêter sous la forme d'une suite, ce qui nous donne la suite \((u_n)\) définie par la formule \(u_{n+1} = u_n - \frac{f(u_n)}{f'(u_n)}\\)
     <br>
-    On va donc pouvoir simplement remplacer $f(a_0)$ et $f'(a_0)$ par notre fonction $g$ :
+    On va donc pouvoir simplement remplacer \(f(a_0)\) et \(f'(a_0)\) par notre fonction \(g\) :
     $$
     \begin{align*}
     g'(y) = -\frac{2}{y^3} \\
     u_{n+1} = u_n - \frac{\frac{1}{u_n^2} - x}{-\frac{2}{u_n^3}} = u_n - \frac{u_n^3(\frac{1}{u_n^2}-x)}{-2} = u_n + \frac{u_n - u_n^3x}{2} = \frac{u_n(3 - u^2x)}{2} 
     \end{align*}
     $$
-    On se retrouve alors avec l'écriture $\frac{u_n(3 - u^2x)}{2}$ soit $u_n(\frac{3}{2} - \frac{x}{2} \times u_n \times u_n)$, soit la même chose que la ligne <code class="language-clike">y  = y * ( threehalfs - ( x2 * y * y ) );</code>
+    On se retrouve alors avec l'écriture \(\frac{u_n(3 - u^2x)}{2}\) soit \(u_n(\frac{3}{2} - \frac{x}{2} \times u_n \times u_n)\), soit la même chose que la ligne <code class="language-clike">y  = y * ( threehalfs - ( x2 * y * y ) );</code>
     
   </p>
   <h3 id="interet">Cet algorithme est-il toujours intéressant ?</h3>
@@ -325,9 +325,6 @@
     Par exemple, l'entreprise Meta a récemment déployé le moteur Hermes, permettant un lancement plus rapide des application mobiles conçues avec react native, un outil de développement d'application mobiles en javascript.
   </p>
   <p>
-  <!--TODO :
-    - CSS
-  -->
 
   <hr>
   <h3 id="bibliographie">Bibliographie</h3>
@@ -348,12 +345,6 @@
   <script type="module" src="animation.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
   <script>
-    MathJax = {
-        tex: {
-            inlineMath: [['$', '$']]
-        }
-    };
-    MathJax.typeset();
   </script> 
 </body>
 </html>
