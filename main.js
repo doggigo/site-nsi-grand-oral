@@ -32,7 +32,7 @@ function createSteps() {
   stepsDiv.innerHTML = "";
   if(!demoAnimation.getVector()) return;
   let {x,y} = demoAnimation.getVector();
-  addStep(1,"p",`Voici notre vecteur \\(\\vec{v}\\): \\(\n${demoAnimation.getVector().toLaTeX()}\\)`);
+  addStep(1,"p",`Voici notre vecteur $\\vec{v}$: $\n${demoAnimation.getVector().toLaTeX()}$`);
   let alpha = x**2 + y**2;
   addStep(2, "p", `Admettons alors : $$\\alpha = x^2 + y^2 = ${x}^2 + ${y}^2 = ${alpha}$$`);
   let beta = wasmExports.q_rsqrt(alpha);
