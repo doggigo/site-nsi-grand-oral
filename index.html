@@ -19,6 +19,83 @@
   <h1>Mon grand Oral</h1>
   <h2>Problématique :</h2>
   <h2>"L'algorithme racine carrée inverse rapide : doit-on privilégier les performances en dépit d'un mauvais code ?"</h2>
+
+
+  <div>
+    <dialog>
+      <button autofocus>Fermer</button>
+      <p>
+        <ul>
+          <li>18/01/2024 : J'ai commencé par chercher comment compiler un programme en C pour qu'il puisse être lu par
+            un navigateur avec le langage WebAssembly. Après avoir essayé plusieurs compilateur qui étaient obsolètes ou même inaccessible
+            J'ai trouvé le compilateur parfait : Emscripten.
+            Son module "emcc" fonctionne exactement comme le compilateur gcc, à la différence que emcc compile en WASM et crée en plus un fichier javascript (que j'ai utilisé plus tard) 
+            ainsi qu'un fichier html qui exécute la fonction main, qui m'a permis de vérifier que le code fonctionnait bien.</li>
+          <li>19/01/2024 : J'ai utilisé la librairie p5.js afin de créer un modèle interactif qui consiste à tracer un vecteur à la souris
+            <br>  
+            puis à montrer que la normalisation fonctionne correctement en détaillant les étapes.
+            <br>
+            J'ai également utilisé le module MathJax qui m'a permis d'utiliser le langage LaTeX sur html.
+            <br>
+            Pour finir, j'ai créé ma bibliographie en y ajoutant les vidéos qui m'ont permis de trouver ce sujet.</li>
+          <li>20/01/2024 : j'ai fait des recherches sur l'origine de l'algorithme et écrit le résultat de mes recherches</li>
+          <li>21/01/2024 : J'ai décrit à quoi servait l'algorithme (je risque de le modifier par la suite)</li>
+          <li>23/01/2024 : En vue d'expliquer pourquoi utiliser cet algorithme, j'ai voulu montrer le nombre d'instructions faites entre l'approche directe "reverse_sqrt" qui renvoie simplement 1/sqrt(x) et q_rsqrt(x)
+            <br>
+            J'ai d'abord pensé à compiler mon fichier .c pour obtenir le code compilé en assembleur et compter le nombre d'instructions (il se situe toujours à l'adresse c/fast_rsqrt.s)
+            <br>
+            Mais problème : la fonction inverse_sqrt utilise la librairie "math.h", une librairie statique et donc déjà compilée. Je ne peux alors pas voir le nombre d'instructions totales faites par ma fonction.
+            <br>
+            Vient alors le logiciel Valgrind et sa fonctionnalité callgrind, elle permet de récupérer les statistiques d'un code en c.
+            <br>
+            Il va alors créer un fichier "callgrind.out.[xx]" avec xx un nombre à 2 chiffres.
+            <br>
+            J'ai alors voulu ouvrir ce fichier avec KCacheGrind, un logiciel pour visualiser plus facilement les données de ce fichier.
+            <br>
+            Encore un problème : KCacheGrind n'est plus téléchargeable sur Windows. J'ai alors téléchargé une version précompilée pour Windows du logiciel "QCacheGrind" et j'ai enfin pu voir le nombre d'appels
+            <br>
+            par fonction (et le résultat est sans appel, q_rsqrt fait ~ 17 fois moins d'appel que reverse_sqrt)</li>
+          <li>24 + 25/01/2024 : Je viens d'apprendre que mon approche était partiellement fausse. La comparaison du nombre d'appels est totalement éronnée.
+            <br>
+            Pourquoi ? Car depuis le temps, les ordinateurs ont beaucoup évolué et notamment grâce aux nouvelles architectures de processeurs qui permettent de calculer bien plus rapidement la division et la racine carrée. 
+            <br>
+            J'ai ajouté un lien vers une personne parlant de pourquoi l'algorithme n'affiche pas autant d'amélioration par rapport à avant.
+            <br>
+            J'ai cependant laissé un screenshot de mes résultats callgrind ainsi que les algorithmes compilés dans mon code source (dans les ./c et ./images)</li>
+          <li>26/01/2024 : J'ai fait des recherches sur le fonctionnement du standard de représentation de flottants "IEEE 754", utilisée par l'algorithme.</li>
+          <li>28/01/2024 : Pour la ligne "What the F*ck" j'ai regardé l'explication de la vidéo de "Nemean" (vidéo dans la bibliographie) et j'ai retranscrit les étapes utilisées.
+            <br>
+            MAIS il a passé une grosse étape, lorsqu'il a simplifié l'égalité, il a passé ses étapes de calcul.
+            <br>
+            J'ai donc essayé de l'écrire sur une feuille mais j'admet m'être un peu perdu avec cette longue équation.
+            <br>
+            J'ai alors remplacé la représentation binaire de nos deux nombres par B pour me simplifier la tâche. 
+            <br>
+            La simplification était alors beaucoup plus simple. J'ai donc réussi à simplifier l'égalité et pu la retranscrire étape par étape sur le site web.</li>
+          <li>29/01/2024 : après avoir appris qu'un vecteur normalisé donnait "un vecteur unitaire colinéaire avec notre vecteur initial", j'ai décidé réécrire mon paragraphe parlant de l'utilité de la racine carrée inversée.</li>
+          <li>29/02/2024 : après ce long mois sans avancer sur le site web, j'ai continué le site web grâce aux recherches que j'ai faites entre temps</li>
+        </ul>
+      </p>
+    </dialog>
+    <button>Afficher le journal</button>
+  </div>
+
+  <script>
+    const dialog = document.querySelector("dialog");
+    const showButton = document.querySelector("dialog + button");
+    const closeButton = document.querySelector("dialog button");
+    
+    // Le bouton "Afficher la fenêtre" ouvre le dialogue
+    showButton.addEventListener("click", () => {
+      dialog.showModal();
+    });
+    
+    // Le bouton "Fermer" ferme le dialogue
+    closeButton.addEventListener("click", () => {
+      dialog.close();
+    });
+    </script>
+
   <ul id="sommaire">
     <h3>Sommaire</h3>
     <h4>Partie 1</h4>

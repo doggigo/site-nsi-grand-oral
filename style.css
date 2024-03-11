@@ -101,3 +101,14 @@ footer {
   text-align: center;
   color: #777;
 }
+::backdrop {
+  background-color: rgba(0,0,0,75%);
+}
+
+dialog > ul > li {
+  list-style-type: initial;
+}
+
+dialog > ul {
+  margin: 5px;
+}
