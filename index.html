@@ -308,7 +308,7 @@
     $$B_\Gamma = -\frac{1}{2}2^{23}(\frac{B_x}{2^{23}} - (127 - \mu)) + 2^{23}(127-\mu)$$
     $$B_\Gamma = -\frac{1}{2}B_x + \frac{1}{2}2^{23}(127-\mu) + 2^{23}(127 - \mu)$$
     $$B_\Gamma = \frac{3}{2}2^{23}(127-\mu) - \frac{1}{2}B_x$$
-    Donc, pour trouver la valeur binaire de \(\Gamma\), on va devoir soustraire \\(\frac{1}{2}B_x\) à \(\frac{3}{2}2^{23}(127-\mu)\\).
+    Donc, pour trouver la valeur binaire de \(\Gamma\), on va devoir soustraire \(\frac{1}{2}B_x\) à \(\frac{3}{2}2^{23}(127-\mu)\\).
     <br>
     On a déjà montré que \(\frac{1}{2}B_x\\) pouvait se calculer avec la ligne <code class="language-clike"> - (i >> 1)</code>
     Ainsi, Nous n'avons plus qu'à calculer \(\frac{3}{2}2^{23}(127-\mu)\\).
