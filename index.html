@@ -299,19 +299,19 @@
     Donc : \(-\frac{1}{2}\log_2(x) = \)<code class="language-clike"> - (i >> 1)</code>
     Mais pourquoi a-t-on cette constante "0x5f3759df" semblant insignifiante ?
     <br>
-    Admettons que \(\Gamma = x^{-\frac{1}{2}}\), alors \(\log_2(\Gamma) =-\frac{1}{2}\times\log_2(x)\\)
+    Admettons que \(\Gamma = x^{-\frac{1}{2}}\), alors \(\log_2(\Gamma) =-\frac{1}{2}\times\log_2(x)\)
     posons \(B_n\) la représentation binaire de \(n\).
-    En remplaçant cette égalité par la représentation binaire de \(x\) et \(\Gamma\\), on obtient :
+    En remplaçant cette égalité par la représentation binaire de \(x\) et \(\Gamma\), on obtient :
     $$\frac{1}{2^{23}}B_\Gamma + \mu - 127 = -\frac{1}{2}\Big(\frac{1}{2^{23}}B_x + \mu - 127\Big)$$
     $$\frac{B_\Gamma}{2^{23}} = -\frac{1}{2}\Big(\frac{B_x}{2^{23}} - (127 - \mu)\Big) + (127-\mu)$$
     $$B_\Gamma = 2^{23}(-\frac{1}{2}(\frac{B_x}{L} - (127 - \mu)) + (127 - \mu)) $$
     $$B_\Gamma = -\frac{1}{2}2^{23}(\frac{B_x}{2^{23}} - (127 - \mu)) + 2^{23}(127-\mu)$$
     $$B_\Gamma = -\frac{1}{2}B_x + \frac{1}{2}2^{23}(127-\mu) + 2^{23}(127 - \mu)$$
     $$B_\Gamma = \frac{3}{2}2^{23}(127-\mu) - \frac{1}{2}B_x$$
-    Donc, pour trouver la valeur binaire de \(\Gamma\), on va devoir soustraire \(\frac{1}{2}B_x\) à \(\frac{3}{2}2^{23}(127-\mu)\\).
+    Donc, pour trouver la valeur binaire de \(\Gamma\), on va devoir soustraire \(\frac{1}{2}B_x\) à \(\frac{3}{2}2^{23}(127-\mu)\).
     <br>
-    On a déjà montré que \(\frac{1}{2}B_x\\) pouvait se calculer avec la ligne <code class="language-clike"> - (i >> 1)</code>
-    Ainsi, Nous n'avons plus qu'à calculer \(\frac{3}{2}2^{23}(127-\mu)\\).
+    On a déjà montré que \(\frac{1}{2}B_x\) pouvait se calculer avec la ligne <code class="language-clike"> - (i >> 1)</code>
+    Ainsi, Nous n'avons plus qu'à calculer \(\frac{3}{2}2^{23}(127-\mu)\).
     $$\Big(\frac{3}{2}2^{23}(127-\mu)\Big)_{10} \approx (1597463007)_{10} = (\text{0x5f3759df})_{16}$$
     Donc, on se retrouve avec ce code :
     <code class="language-clike">0x5f3759df - (i >> 1)</code>
@@ -335,9 +335,9 @@
     <br>
     Pour se rapprocher de la racine d'une fonction à partir d'une valeur initiale \(a_0\), on trace la tangente de la courbe de la fonction au point d'abscisse \(a_0\), la valeur \(a_1\) est l'abscisse de la racine de la fonction définissant notre tangente.
     <br>
-    \(T_{a_0} : f'(a_0)(x-a_0) + f(a_0)\\)
+    \(T_{a_0} : f'(a_0)(x-a_0) + f(a_0)\)
     <br>
-    Donc l'equation \((E)\) définissant l'abscisse du point pour lequel \(T_{a_0}\) s'annule est définie de la manière suivante : \((E) : f'(a_0)(x-a_0) + f(a_0) = 0\\)
+    Donc l'equation \((E)\) définissant l'abscisse du point pour lequel \(T_{a_0}\) s'annule est définie de la manière suivante : \((E) : f'(a_0)(x-a_0) + f(a_0) = 0\)
     <br>
     $$
     \begin{align*}
@@ -348,9 +348,9 @@
     x = a_0 - \frac{f(a_0)}{f'(a_0)}
     \end{align*}
     $$
-    On se retrouve donc avec l'equation \(x = a_0 - \frac{f(a_0)}{f'(a_0)}\\)
+    On se retrouve donc avec l'equation \(x = a_0 - \frac{f(a_0)}{f'(a_0)}\)
     <br>
-    on peut l'interprêter sous la forme d'une suite, ce qui nous donne la suite \((u_n)\) définie par la formule \(u_{n+1} = u_n - \frac{f(u_n)}{f'(u_n)}\\)
+    on peut l'interprêter sous la forme d'une suite, ce qui nous donne la suite \((u_n)\) définie par la formule \(u_{n+1} = u_n - \frac{f(u_n)}{f'(u_n)}\)
     <br>
     On va donc pouvoir simplement remplacer \(f(a_0)\) et \(f'(a_0)\) par notre fonction \(g\) :
     $$
